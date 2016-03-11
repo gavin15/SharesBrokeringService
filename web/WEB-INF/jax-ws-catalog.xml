@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/Users/gavin/Coursework/SharesBrokeringService/src/java/companyXmlSchema.xsd" uri="src/conf/xml-resources/jaxb/ComapanyShares/companyXmlSchema.xsd"/>
+    <system systemId="http://localhost:13797/CurrencyConvertor/CurrencyConversionWSService?wsdl" uri="wsdl/localhost_13797/CurrencyConvertor/CurrencyConversionWSService.wsdl"/>
+    <system systemId="http://localhost:13797/CurrencyConvertor/CurrencyConversionWSService?xsd=1" uri="wsdl/localhost_13797/CurrencyConvertor/CurrencyConversionWSService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/UserService/UserWS?wsdl" uri="wsdl/localhost_8080/UserService/UserWS.wsdl"/>
+    <system systemId="http://localhost:8080/UserService/UserWS?xsd=1" uri="wsdl/localhost_8080/UserService/UserWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:13797/UserService/UserWS?wsdl" uri="wsdl/localhost_13797/UserService/UserWS.wsdl"/>
+    <system systemId="http://localhost:13797/UserService/UserWS?xsd=1" uri="wsdl/localhost_13797/UserService/UserWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:13797/UserService/UserWS?WSDL" uri="wsdl/localhost_13797/UserService/UserWS.wsdl"/>
+</catalog>
