@@ -8,4 +8,5 @@
     <system systemId="http://localhost:13797/UserService/UserWS?wsdl" uri="wsdl/localhost_13797/UserService/UserWS.wsdl"/>
     <system systemId="http://localhost:13797/UserService/UserWS?xsd=1" uri="wsdl/localhost_13797/UserService/UserWS.xsd_1.xsd"/>
     <system systemId="http://localhost:13797/UserService/UserWS?WSDL" uri="wsdl/localhost_13797/UserService/UserWS.wsdl"/>
+    <system systemId="http://localhost:13797/UserService/UserWS?xsd=2" uri="wsdl/localhost_13797/UserService/UserWS.xsd_2.xsd"/>
 </catalog>

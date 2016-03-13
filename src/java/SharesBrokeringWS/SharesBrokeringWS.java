@@ -71,7 +71,7 @@ public class SharesBrokeringWS {
     }
     
     @WebMethod(operationName = "BuyShare")
-    public List<CompanyType> BuyShare(@WebParam(name = "Symbol") String company, @WebParam(name = "shareQty") String qty) throws FileNotFoundException
+    public List<CompanyType> BuyShare(@WebParam(name = "Symbol") String company, @WebParam(name = "shareQty") String qty, @WebParam(name = "user") String user) throws FileNotFoundException, FileNotFoundException_Exception
     {
         int shares = Integer.valueOf(qty);
         CompanyShares companyList= new CompanyShares();
@@ -87,13 +87,16 @@ public class SharesBrokeringWS {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
-        for (int i = 0; i < companyList.getCompany().size(); i++) {
+        int i =0;
+        for (i= 0; i < companyList.getCompany().size(); i++) {
             if (companyList.getCompany().get(i).getCompanySymbol().equalsIgnoreCase(company.trim())){
                 companyList.getCompany().get(i).setAvailableShares(companyList.getCompany().get(i).getAvailableShares()-shares);
                 companyList.getCompany().get(i).getSharePrice().setLastUpdate(dateFormat.format(date));
                 break;
             }
         }
+        
+        buyUserShare(user, companyList.getCompany().get(i).getCompanySymbol(), companyList.getCompany().get(i).getCompanyName(), shares);
         
         try {            
             javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(companyList.getClass().getPackage().getName());
@@ -138,5 +141,72 @@ public class SharesBrokeringWS {
         // If the calling of port operations may lead to race condition some synchronization is required.
         userws.UserWS port = service_1.getUserWSPort();
         port.createUser(userName, password, currency);
+    }
+
+    @WebMethod(operationName = "ListUserShares")
+    public java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType> listUserShares(java.lang.String userName) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        userws.UserWS port = service_1.getUserWSPort();
+        return port.listUserShares(userName);
+    }
+
+    private String buyUserShare(java.lang.String userName, java.lang.String companySymbol, java.lang.String companyName, int noOfShares) throws FileNotFoundException_Exception {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        userws.UserWS port = service_1.getUserWSPort();
+        return port.buyUserShare(userName, companySymbol, companyName, noOfShares);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "SellShare")
+    public List<CompanyType> SellShare(@WebParam(name = "userName") String userName, @WebParam(name = "companySymbol") String companySymbol, @WebParam(name = "shareQty") String shareQty) throws FileNotFoundException, FileNotFoundException_Exception {
+         int shares = Integer.valueOf(shareQty);
+        CompanyShares companyList= new CompanyShares();
+        try {
+            javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(companyList.getClass().getPackage().getName());
+            javax.xml.bind.Unmarshaller unmarshaller = jaxbCtx.createUnmarshaller();
+            companyList = (CompanyShares) unmarshaller.unmarshal(new java.io.File("test.xml")); //NOI18N
+        } catch (javax.xml.bind.JAXBException ex) {
+            // XXXTODO Handle exception
+            java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+
+        int i =0;
+        for (i= 0; i < companyList.getCompany().size(); i++) {
+            if (companyList.getCompany().get(i).getCompanySymbol().equalsIgnoreCase(companySymbol.trim())){
+                companyList.getCompany().get(i).setAvailableShares(companyList.getCompany().get(i).getAvailableShares()+shares);
+                companyList.getCompany().get(i).getSharePrice().setLastUpdate(dateFormat.format(date));
+                break;
+            }
+        }
+         
+        sellUserShare(userName, companyList.getCompany().get(i).getCompanyName(),companySymbol, shares);
+        
+        try {            
+            javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(companyList.getClass().getPackage().getName());
+            javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_ENCODING, "UTF-8"); //NOI18N
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            //marshaller.marshal(companyList, System.out);
+            OutputStream os = new FileOutputStream( "test.xml" );
+            marshaller.marshal( companyList, os );
+        } catch (javax.xml.bind.JAXBException ex) {
+            // XXXTODO Handle exception
+            java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
+        }
+        
+        return companyList.getCompany();
+    }
+
+    private java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType> sellUserShare(java.lang.String userName, java.lang.String companyName, java.lang.String companySymbol, int noOfShares) throws FileNotFoundException_Exception {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        userws.UserWS port = service_1.getUserWSPort();
+        return port.sellUserShare(userName, companyName, companySymbol, noOfShares);
     }
 }
