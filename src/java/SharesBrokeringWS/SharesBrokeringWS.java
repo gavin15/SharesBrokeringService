@@ -23,6 +23,9 @@ import modulewebservices.ProtocolException_Exception;
 import org.netbeans.xml.schema.companyxmlschema.CompanyShares;
 import org.netbeans.xml.schema.companyxmlschema.CompanyType;
 import userws.FileNotFoundException_Exception;
+import userws.IOExceptionException;
+import userws.MalformedURLExceptionException;
+import userws.ProtocolExceptionException;
 import userws.UserWS_Service;
 
 /**
@@ -46,6 +49,9 @@ public class SharesBrokeringWS {
         return "Hello " + txt + " !";
     }
     
+    /**
+     * This method lists the companies that offer the shares for sale.
+     */
     @WebMethod(operationName = "ListCompanies")
     public List<CompanyType> ListCompanies()
     {
@@ -62,6 +68,9 @@ public class SharesBrokeringWS {
         return companyList.getCompany();
     }
 
+    /**
+     * This method gets the currency codes from CurrencyConverter service.
+     */
     @WebMethod(operationName = "GetCurrencyCodes")
     public java.util.List<java.lang.String> getCurrencyCodes() {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
@@ -70,11 +79,15 @@ public class SharesBrokeringWS {
         return port.getCurrencyCodes();
     }
     
+    /**
+     * This method allows users to buy shares.
+     */
     @WebMethod(operationName = "BuyShare")
-    public List<CompanyType> BuyShare(@WebParam(name = "Symbol") String company, @WebParam(name = "shareQty") String qty, @WebParam(name = "user") String user) throws FileNotFoundException, FileNotFoundException_Exception
+    public List<CompanyType> BuyShare(@WebParam(name = "Symbol") String company, @WebParam(name = "shareQty") String qty, @WebParam(name = "user") String user) throws FileNotFoundException, FileNotFoundException_Exception, IOExceptionException, ProtocolExceptionException, MalformedURLExceptionException
     {
         int shares = Integer.valueOf(qty);
         CompanyShares companyList= new CompanyShares();
+        // unmarshalls the file.
         try {
             javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(companyList.getClass().getPackage().getName());
             javax.xml.bind.Unmarshaller unmarshaller = jaxbCtx.createUnmarshaller();
@@ -87,6 +100,7 @@ public class SharesBrokeringWS {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
+        // perform logic
         int i =0;
         for (i= 0; i < companyList.getCompany().size(); i++) {
             if (companyList.getCompany().get(i).getCompanySymbol().equalsIgnoreCase(company.trim())){
@@ -96,8 +110,10 @@ public class SharesBrokeringWS {
             }
         }
         
-        buyUserShare(user, companyList.getCompany().get(i).getCompanySymbol(), companyList.getCompany().get(i).getCompanyName(), shares);
+        // Adds the shares against the user who puchased.
+        buyUserShare(user, companyList.getCompany().get(i).getCompanySymbol(), companyList.getCompany().get(i).getCompanyName(), shares,companyList.getCompany().get(i).getSharePrice().getCurrency(),companyList.getCompany().get(i).getSharePrice().getValue());
         
+        // Marshals back to the file.
         try {            
             javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(companyList.getClass().getPackage().getName());
             javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
@@ -111,11 +127,12 @@ public class SharesBrokeringWS {
             java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
         }
         
+        // Returns the updated list.
         return companyList.getCompany();
     }
 
     /**
-     * Web service operation
+     * Gets the total amount for the selected shares.
      */
     @WebMethod(operationName = "GetTotal")
     public String GetTotal(@WebParam(name = "shareQty") String shareQty,@WebParam(name = "sharePrice") String sharePrice, @WebParam(name = "currency1") String currency1, @WebParam(name = "currency2") String currency2) throws IOException_Exception, MalformedURLException_Exception, ProtocolException_Exception {
@@ -135,6 +152,9 @@ public class SharesBrokeringWS {
         return port.getConversionRate(arg0, arg1);
     }    
     
+    /**
+     * This method creates a new user and stores it.
+     */
     @WebMethod(operationName = "CreateUser")
     public void createUser(java.lang.String userName, java.lang.String password, java.lang.String currency) throws FileNotFoundException_Exception {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
@@ -143,6 +163,9 @@ public class SharesBrokeringWS {
         port.createUser(userName, password, currency);
     }
 
+    /**
+     * This method lists the shares owned by a user.
+     */
     @WebMethod(operationName = "ListUserShares")
     public java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType> listUserShares(java.lang.String userName) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
@@ -151,20 +174,17 @@ public class SharesBrokeringWS {
         return port.listUserShares(userName);
     }
 
-    private String buyUserShare(java.lang.String userName, java.lang.String companySymbol, java.lang.String companyName, int noOfShares) throws FileNotFoundException_Exception {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        userws.UserWS port = service_1.getUserWSPort();
-        return port.buyUserShare(userName, companySymbol, companyName, noOfShares);
-    }
+
 
     /**
-     * Web service operation
+     * Allows users to sell shares back to the market.
      */
     @WebMethod(operationName = "SellShare")
-    public List<CompanyType> SellShare(@WebParam(name = "userName") String userName, @WebParam(name = "companySymbol") String companySymbol, @WebParam(name = "shareQty") String shareQty) throws FileNotFoundException, FileNotFoundException_Exception {
+    public List<CompanyType> SellShare(@WebParam(name = "userName") String userName, @WebParam(name = "companySymbol") String companySymbol, @WebParam(name = "shareQty") String shareQty) throws FileNotFoundException, FileNotFoundException_Exception, ProtocolExceptionException, MalformedURLExceptionException, IOExceptionException {
          int shares = Integer.valueOf(shareQty);
         CompanyShares companyList= new CompanyShares();
+        
+        //Unmarshals the file.
         try {
             javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(companyList.getClass().getPackage().getName());
             javax.xml.bind.Unmarshaller unmarshaller = jaxbCtx.createUnmarshaller();
@@ -176,6 +196,7 @@ public class SharesBrokeringWS {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
+        // Perform logic.
         int i =0;
         for (i= 0; i < companyList.getCompany().size(); i++) {
             if (companyList.getCompany().get(i).getCompanySymbol().equalsIgnoreCase(companySymbol.trim())){
@@ -185,8 +206,10 @@ public class SharesBrokeringWS {
             }
         }
          
-        sellUserShare(userName, companyList.getCompany().get(i).getCompanyName(),companySymbol, shares);
+        // Commit the changes to the user.
+        sellUserShare(userName, companyList.getCompany().get(i).getCompanyName(),companySymbol,shares,companyList.getCompany().get(i).getSharePrice().getCurrency(),companyList.getCompany().get(i).getSharePrice().getValue());
         
+        // Marshal back to the file.
         try {            
             javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(companyList.getClass().getPackage().getName());
             javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
@@ -200,13 +223,57 @@ public class SharesBrokeringWS {
             java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
         }
         
+        //Return the updated list.
         return companyList.getCompany();
     }
 
-    private java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType> sellUserShare(java.lang.String userName, java.lang.String companyName, java.lang.String companySymbol, int noOfShares) throws FileNotFoundException_Exception {
+
+    private String buyUserShare(java.lang.String userName, java.lang.String companySymbol, java.lang.String companyName, int noOfShares, java.lang.String currency, float sharePrice) throws IOExceptionException, FileNotFoundException_Exception, ProtocolExceptionException, MalformedURLExceptionException {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         userws.UserWS port = service_1.getUserWSPort();
-        return port.sellUserShare(userName, companyName, companySymbol, noOfShares);
+        return port.buyUserShare(userName, companySymbol, companyName, noOfShares, currency, sharePrice);
+    }
+
+    private java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType> sellUserShare(java.lang.String userName, java.lang.String companyName, java.lang.String companySymbol, int noOfShares, java.lang.String currency, float sharePrice) throws ProtocolExceptionException, MalformedURLExceptionException, FileNotFoundException_Exception, IOExceptionException {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        userws.UserWS port = service_1.getUserWSPort();
+        return port.sellUserShare(userName, companyName, companySymbol, noOfShares, currency, sharePrice);
+    }
+
+
+
+    /**
+     * Get the currency of the user.
+     */
+    @WebMethod(operationName = "GetUserCurrency")
+    public String getUserCurrency(java.lang.String userName, java.lang.String password) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        userws.UserWS port = service_1.getUserWSPort();
+        return port.getUserCurrency(userName, password);
+    }
+
+    /**
+     * Check if the logged in user exists.
+     */
+    @WebMethod(operationName = "CheckUserExists")
+    public boolean checkUserExists(java.lang.String userName, java.lang.String password) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        userws.UserWS port = service_1.getUserWSPort();
+        return port.checkUserExists(userName, password);
+    }
+
+    /**
+     * Get the amount available for a user.
+     */
+    @WebMethod(operationName = "GetUserAmount")
+    public String getUserAmount(java.lang.String userName) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        userws.UserWS port = service_1.getUserWSPort();
+        return port.getUserAmount(userName);
     }
 }

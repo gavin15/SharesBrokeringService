@@ -26,9 +26,15 @@ public class ObjectFactory {
 
     private final static QName _BuyUserShare_QNAME = new QName("http://UserWS/", "BuyUserShare");
     private final static QName _BuyUserShareResponse_QNAME = new QName("http://UserWS/", "BuyUserShareResponse");
+    private final static QName _CheckUserExists_QNAME = new QName("http://UserWS/", "CheckUserExists");
+    private final static QName _CheckUserExistsResponse_QNAME = new QName("http://UserWS/", "CheckUserExistsResponse");
     private final static QName _CreateUser_QNAME = new QName("http://UserWS/", "CreateUser");
     private final static QName _CreateUserResponse_QNAME = new QName("http://UserWS/", "CreateUserResponse");
     private final static QName _FileNotFoundException_QNAME = new QName("http://UserWS/", "FileNotFoundException");
+    private final static QName _GetUserAmount_QNAME = new QName("http://UserWS/", "GetUserAmount");
+    private final static QName _GetUserAmountResponse_QNAME = new QName("http://UserWS/", "GetUserAmountResponse");
+    private final static QName _GetUserCurrency_QNAME = new QName("http://UserWS/", "GetUserCurrency");
+    private final static QName _GetUserCurrencyResponse_QNAME = new QName("http://UserWS/", "GetUserCurrencyResponse");
     private final static QName _ListUserShares_QNAME = new QName("http://UserWS/", "ListUserShares");
     private final static QName _ListUserSharesResponse_QNAME = new QName("http://UserWS/", "ListUserSharesResponse");
     private final static QName _SellUserShare_QNAME = new QName("http://UserWS/", "SellUserShare");
@@ -60,6 +66,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CheckUserExists }
+     * 
+     */
+    public CheckUserExists createCheckUserExists() {
+        return new CheckUserExists();
+    }
+
+    /**
+     * Create an instance of {@link CheckUserExistsResponse }
+     * 
+     */
+    public CheckUserExistsResponse createCheckUserExistsResponse() {
+        return new CheckUserExistsResponse();
+    }
+
+    /**
      * Create an instance of {@link CreateUser }
      * 
      */
@@ -81,6 +103,38 @@ public class ObjectFactory {
      */
     public FileNotFoundException createFileNotFoundException() {
         return new FileNotFoundException();
+    }
+
+    /**
+     * Create an instance of {@link GetUserAmount }
+     * 
+     */
+    public GetUserAmount createGetUserAmount() {
+        return new GetUserAmount();
+    }
+
+    /**
+     * Create an instance of {@link GetUserAmountResponse }
+     * 
+     */
+    public GetUserAmountResponse createGetUserAmountResponse() {
+        return new GetUserAmountResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetUserCurrency }
+     * 
+     */
+    public GetUserCurrency createGetUserCurrency() {
+        return new GetUserCurrency();
+    }
+
+    /**
+     * Create an instance of {@link GetUserCurrencyResponse }
+     * 
+     */
+    public GetUserCurrencyResponse createGetUserCurrencyResponse() {
+        return new GetUserCurrencyResponse();
     }
 
     /**
@@ -150,6 +204,24 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CheckUserExists }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://UserWS/", name = "CheckUserExists")
+    public JAXBElement<CheckUserExists> createCheckUserExists(CheckUserExists value) {
+        return new JAXBElement<CheckUserExists>(_CheckUserExists_QNAME, CheckUserExists.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CheckUserExistsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://UserWS/", name = "CheckUserExistsResponse")
+    public JAXBElement<CheckUserExistsResponse> createCheckUserExistsResponse(CheckUserExistsResponse value) {
+        return new JAXBElement<CheckUserExistsResponse>(_CheckUserExistsResponse_QNAME, CheckUserExistsResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CreateUser }{@code >}}
      * 
      */
@@ -174,6 +246,42 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://UserWS/", name = "FileNotFoundException")
     public JAXBElement<FileNotFoundException> createFileNotFoundException(FileNotFoundException value) {
         return new JAXBElement<FileNotFoundException>(_FileNotFoundException_QNAME, FileNotFoundException.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserAmount }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://UserWS/", name = "GetUserAmount")
+    public JAXBElement<GetUserAmount> createGetUserAmount(GetUserAmount value) {
+        return new JAXBElement<GetUserAmount>(_GetUserAmount_QNAME, GetUserAmount.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserAmountResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://UserWS/", name = "GetUserAmountResponse")
+    public JAXBElement<GetUserAmountResponse> createGetUserAmountResponse(GetUserAmountResponse value) {
+        return new JAXBElement<GetUserAmountResponse>(_GetUserAmountResponse_QNAME, GetUserAmountResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserCurrency }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://UserWS/", name = "GetUserCurrency")
+    public JAXBElement<GetUserCurrency> createGetUserCurrency(GetUserCurrency value) {
+        return new JAXBElement<GetUserCurrency>(_GetUserCurrency_QNAME, GetUserCurrency.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserCurrencyResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://UserWS/", name = "GetUserCurrencyResponse")
+    public JAXBElement<GetUserCurrencyResponse> createGetUserCurrencyResponse(GetUserCurrencyResponse value) {
+        return new JAXBElement<GetUserCurrencyResponse>(_GetUserCurrencyResponse_QNAME, GetUserCurrencyResponse.class, null, value);
     }
 
     /**

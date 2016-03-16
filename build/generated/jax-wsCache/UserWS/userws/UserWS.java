@@ -22,11 +22,42 @@ import org.netbeans.xml.schema.userxmlschema.CompanyType;
  */
 @WebService(name = "UserWS", targetNamespace = "http://UserWS/")
 @XmlSeeAlso({
+    modulewebservices.ObjectFactory.class,
     org.netbeans.xml.schema.userxmlschema.ObjectFactory.class,
     userws.ObjectFactory.class
 })
 public interface UserWS {
 
+
+    /**
+     * 
+     * @param name
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "hello", targetNamespace = "http://UserWS/", className = "userws.Hello")
+    @ResponseWrapper(localName = "helloResponse", targetNamespace = "http://UserWS/", className = "userws.HelloResponse")
+    @Action(input = "http://UserWS/UserWS/helloRequest", output = "http://UserWS/UserWS/helloResponse")
+    public String hello(
+        @WebParam(name = "name", targetNamespace = "")
+        String name);
+
+    /**
+     * 
+     * @param userName
+     * @return
+     *     returns java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType>
+     */
+    @WebMethod(operationName = "ListUserShares")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "ListUserShares", targetNamespace = "http://UserWS/", className = "userws.ListUserShares")
+    @ResponseWrapper(localName = "ListUserSharesResponse", targetNamespace = "http://UserWS/", className = "userws.ListUserSharesResponse")
+    @Action(input = "http://UserWS/UserWS/ListUserSharesRequest", output = "http://UserWS/UserWS/ListUserSharesResponse")
+    public List<CompanyType> listUserShares(
+        @WebParam(name = "userName", targetNamespace = "")
+        String userName);
 
     /**
      * 
@@ -53,35 +84,28 @@ public interface UserWS {
 
     /**
      * 
-     * @param name
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "hello", targetNamespace = "http://UserWS/", className = "userws.Hello")
-    @ResponseWrapper(localName = "helloResponse", targetNamespace = "http://UserWS/", className = "userws.HelloResponse")
-    @Action(input = "http://UserWS/UserWS/helloRequest", output = "http://UserWS/UserWS/helloResponse")
-    public String hello(
-        @WebParam(name = "name", targetNamespace = "")
-        String name);
-
-    /**
-     * 
      * @param noOfShares
+     * @param sharePrice
      * @param companySymbol
      * @param companyName
+     * @param currency
      * @param userName
      * @return
      *     returns java.lang.String
      * @throws FileNotFoundException_Exception
+     * @throws ProtocolExceptionException
+     * @throws MalformedURLExceptionException
+     * @throws IOExceptionException
      */
     @WebMethod(operationName = "BuyUserShare")
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "BuyUserShare", targetNamespace = "http://UserWS/", className = "userws.BuyUserShare")
     @ResponseWrapper(localName = "BuyUserShareResponse", targetNamespace = "http://UserWS/", className = "userws.BuyUserShareResponse")
     @Action(input = "http://UserWS/UserWS/BuyUserShareRequest", output = "http://UserWS/UserWS/BuyUserShareResponse", fault = {
-        @FaultAction(className = FileNotFoundException_Exception.class, value = "http://UserWS/UserWS/BuyUserShare/Fault/FileNotFoundException")
+        @FaultAction(className = FileNotFoundException_Exception.class, value = "http://UserWS/UserWS/BuyUserShare/Fault/FileNotFoundException"),
+        @FaultAction(className = IOExceptionException.class, value = "http://UserWS/UserWS/BuyUserShare/Fault/IOException_Exception"),
+        @FaultAction(className = MalformedURLExceptionException.class, value = "http://UserWS/UserWS/BuyUserShare/Fault/MalformedURLException_Exception"),
+        @FaultAction(className = ProtocolExceptionException.class, value = "http://UserWS/UserWS/BuyUserShare/Fault/ProtocolException_Exception")
     })
     public String buyUserShare(
         @WebParam(name = "userName", targetNamespace = "")
@@ -91,41 +115,38 @@ public interface UserWS {
         @WebParam(name = "companyName", targetNamespace = "")
         String companyName,
         @WebParam(name = "noOfShares", targetNamespace = "")
-        int noOfShares)
-        throws FileNotFoundException_Exception
+        int noOfShares,
+        @WebParam(name = "currency", targetNamespace = "")
+        String currency,
+        @WebParam(name = "sharePrice", targetNamespace = "")
+        float sharePrice)
+        throws FileNotFoundException_Exception, IOExceptionException, MalformedURLExceptionException, ProtocolExceptionException
     ;
 
     /**
      * 
-     * @param userName
-     * @return
-     *     returns java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType>
-     */
-    @WebMethod(operationName = "ListUserShares")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "ListUserShares", targetNamespace = "http://UserWS/", className = "userws.ListUserShares")
-    @ResponseWrapper(localName = "ListUserSharesResponse", targetNamespace = "http://UserWS/", className = "userws.ListUserSharesResponse")
-    @Action(input = "http://UserWS/UserWS/ListUserSharesRequest", output = "http://UserWS/UserWS/ListUserSharesResponse")
-    public List<CompanyType> listUserShares(
-        @WebParam(name = "userName", targetNamespace = "")
-        String userName);
-
-    /**
-     * 
      * @param noOfShares
+     * @param sharePrice
      * @param companySymbol
      * @param companyName
+     * @param currency
      * @param userName
      * @return
      *     returns java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType>
      * @throws FileNotFoundException_Exception
+     * @throws ProtocolExceptionException
+     * @throws MalformedURLExceptionException
+     * @throws IOExceptionException
      */
     @WebMethod(operationName = "SellUserShare")
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "SellUserShare", targetNamespace = "http://UserWS/", className = "userws.SellUserShare")
     @ResponseWrapper(localName = "SellUserShareResponse", targetNamespace = "http://UserWS/", className = "userws.SellUserShareResponse")
     @Action(input = "http://UserWS/UserWS/SellUserShareRequest", output = "http://UserWS/UserWS/SellUserShareResponse", fault = {
-        @FaultAction(className = FileNotFoundException_Exception.class, value = "http://UserWS/UserWS/SellUserShare/Fault/FileNotFoundException")
+        @FaultAction(className = FileNotFoundException_Exception.class, value = "http://UserWS/UserWS/SellUserShare/Fault/FileNotFoundException"),
+        @FaultAction(className = IOExceptionException.class, value = "http://UserWS/UserWS/SellUserShare/Fault/IOException_Exception"),
+        @FaultAction(className = MalformedURLExceptionException.class, value = "http://UserWS/UserWS/SellUserShare/Fault/MalformedURLException_Exception"),
+        @FaultAction(className = ProtocolExceptionException.class, value = "http://UserWS/UserWS/SellUserShare/Fault/ProtocolException_Exception")
     })
     public List<CompanyType> sellUserShare(
         @WebParam(name = "userName", targetNamespace = "")
@@ -135,8 +156,63 @@ public interface UserWS {
         @WebParam(name = "companySymbol", targetNamespace = "")
         String companySymbol,
         @WebParam(name = "noOfShares", targetNamespace = "")
-        int noOfShares)
-        throws FileNotFoundException_Exception
+        int noOfShares,
+        @WebParam(name = "currency", targetNamespace = "")
+        String currency,
+        @WebParam(name = "sharePrice", targetNamespace = "")
+        float sharePrice)
+        throws FileNotFoundException_Exception, IOExceptionException, MalformedURLExceptionException, ProtocolExceptionException
     ;
+
+    /**
+     * 
+     * @param password
+     * @param userName
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "GetUserCurrency")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "GetUserCurrency", targetNamespace = "http://UserWS/", className = "userws.GetUserCurrency")
+    @ResponseWrapper(localName = "GetUserCurrencyResponse", targetNamespace = "http://UserWS/", className = "userws.GetUserCurrencyResponse")
+    @Action(input = "http://UserWS/UserWS/GetUserCurrencyRequest", output = "http://UserWS/UserWS/GetUserCurrencyResponse")
+    public String getUserCurrency(
+        @WebParam(name = "userName", targetNamespace = "")
+        String userName,
+        @WebParam(name = "password", targetNamespace = "")
+        String password);
+
+    /**
+     * 
+     * @param password
+     * @param userName
+     * @return
+     *     returns java.lang.Boolean
+     */
+    @WebMethod(operationName = "CheckUserExists")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "CheckUserExists", targetNamespace = "http://UserWS/", className = "userws.CheckUserExists")
+    @ResponseWrapper(localName = "CheckUserExistsResponse", targetNamespace = "http://UserWS/", className = "userws.CheckUserExistsResponse")
+    @Action(input = "http://UserWS/UserWS/CheckUserExistsRequest", output = "http://UserWS/UserWS/CheckUserExistsResponse")
+    public Boolean checkUserExists(
+        @WebParam(name = "userName", targetNamespace = "")
+        String userName,
+        @WebParam(name = "password", targetNamespace = "")
+        String password);
+
+    /**
+     * 
+     * @param userName
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "GetUserAmount")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "GetUserAmount", targetNamespace = "http://UserWS/", className = "userws.GetUserAmount")
+    @ResponseWrapper(localName = "GetUserAmountResponse", targetNamespace = "http://UserWS/", className = "userws.GetUserAmountResponse")
+    @Action(input = "http://UserWS/UserWS/GetUserAmountRequest", output = "http://UserWS/UserWS/GetUserAmountResponse")
+    public String getUserAmount(
+        @WebParam(name = "userName", targetNamespace = "")
+        String userName);
 
 }

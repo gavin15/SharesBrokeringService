@@ -20,6 +20,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="companyName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="companySymbol" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="noOfShares" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="currency" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="sharePrice" type="{http://www.w3.org/2001/XMLSchema}float"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -33,7 +35,9 @@ import javax.xml.bind.annotation.XmlType;
     "userName",
     "companyName",
     "companySymbol",
-    "noOfShares"
+    "noOfShares",
+    "currency",
+    "sharePrice"
 })
 public class SellUserShare {
 
@@ -41,6 +45,8 @@ public class SellUserShare {
     protected String companyName;
     protected String companySymbol;
     protected int noOfShares;
+    protected String currency;
+    protected float sharePrice;
 
     /**
      * Gets the value of the userName property.
@@ -128,6 +134,46 @@ public class SellUserShare {
      */
     public void setNoOfShares(int value) {
         this.noOfShares = value;
+    }
+
+    /**
+     * Gets the value of the currency property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * Sets the value of the currency property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCurrency(String value) {
+        this.currency = value;
+    }
+
+    /**
+     * Gets the value of the sharePrice property.
+     * 
+     */
+    public float getSharePrice() {
+        return sharePrice;
+    }
+
+    /**
+     * Sets the value of the sharePrice property.
+     * 
+     */
+    public void setSharePrice(float value) {
+        this.sharePrice = value;
     }
 
 }

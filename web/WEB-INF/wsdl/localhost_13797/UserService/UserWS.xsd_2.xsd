@@ -6,11 +6,23 @@
 
 <xs:element name="BuyUserShareResponse" type="tns:BuyUserShareResponse"/>
 
+<xs:element name="CheckUserExists" type="tns:CheckUserExists"/>
+
+<xs:element name="CheckUserExistsResponse" type="tns:CheckUserExistsResponse"/>
+
 <xs:element name="CreateUser" type="tns:CreateUser"/>
 
 <xs:element name="CreateUserResponse" type="tns:CreateUserResponse"/>
 
 <xs:element name="FileNotFoundException" type="tns:FileNotFoundException"/>
+
+<xs:element name="GetUserAmount" type="tns:GetUserAmount"/>
+
+<xs:element name="GetUserAmountResponse" type="tns:GetUserAmountResponse"/>
+
+<xs:element name="GetUserCurrency" type="tns:GetUserCurrency"/>
+
+<xs:element name="GetUserCurrencyResponse" type="tns:GetUserCurrencyResponse"/>
 
 <xs:element name="ListUserShares" type="tns:ListUserShares"/>
 
@@ -24,24 +36,28 @@
 
 <xs:element name="helloResponse" type="tns:helloResponse"/>
 
-<xs:complexType name="BuyUserShare">
+<xs:complexType name="GetUserAmount">
 <xs:sequence>
 <xs:element name="userName" type="xs:string" minOccurs="0"/>
-<xs:element name="companySymbol" type="xs:string" minOccurs="0"/>
-<xs:element name="companyName" type="xs:string" minOccurs="0"/>
-<xs:element name="noOfShares" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="BuyUserShareResponse">
+<xs:complexType name="GetUserAmountResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="FileNotFoundException">
+<xs:complexType name="CheckUserExists">
 <xs:sequence>
-<xs:element name="message" type="xs:string" minOccurs="0"/>
+<xs:element name="userName" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CheckUserExistsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -57,6 +73,29 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="BuyUserShare">
+<xs:sequence>
+<xs:element name="userName" type="xs:string" minOccurs="0"/>
+<xs:element name="companySymbol" type="xs:string" minOccurs="0"/>
+<xs:element name="companyName" type="xs:string" minOccurs="0"/>
+<xs:element name="noOfShares" type="xs:int"/>
+<xs:element name="currency" type="xs:string" minOccurs="0"/>
+<xs:element name="sharePrice" type="xs:float"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="BuyUserShareResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FileNotFoundException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="CreateUser">
 <xs:sequence>
 <xs:element name="userName" type="xs:string" minOccurs="0"/>
@@ -67,6 +106,19 @@
 
 <xs:complexType name="CreateUserResponse">
 <xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetUserCurrency">
+<xs:sequence>
+<xs:element name="userName" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetUserCurrencyResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="hello">
@@ -87,6 +139,8 @@
 <xs:element name="companyName" type="xs:string" minOccurs="0"/>
 <xs:element name="companySymbol" type="xs:string" minOccurs="0"/>
 <xs:element name="noOfShares" type="xs:int"/>
+<xs:element name="currency" type="xs:string" minOccurs="0"/>
+<xs:element name="sharePrice" type="xs:float"/>
 </xs:sequence>
 </xs:complexType>
 
