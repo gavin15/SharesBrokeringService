@@ -32,9 +32,9 @@ public interface CurrencyConversionWS {
      * @param arg0
      * @return
      *     returns java.lang.String
-     * @throws IOException_Exception
-     * @throws MalformedURLException_Exception
      * @throws ProtocolException_Exception
+     * @throws MalformedURLException_Exception
+     * @throws IOException_Exception
      */
     @WebMethod(operationName = "GetConversionRate")
     @WebResult(targetNamespace = "")

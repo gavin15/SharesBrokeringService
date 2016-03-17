@@ -10,4 +10,8 @@
     <system systemId="http://localhost:13797/UserService/UserWS?xsd=1" uri="src/conf/xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService/UserWS.xsd_1.xsd"/>
     <system systemId="http://localhost:13797/UserService/UserWS?xsd=2" uri="src/conf/xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService/UserWS.xsd_2.xsd"/>
     <system systemId="http://localhost:13797/UserService/UserWS?xsd=3" uri="src/conf/xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService/UserWS.xsd_3.xsd"/>
+    <system systemId="http://localhost:13797/UserService1/UserWS?wsdl" uri="src/conf/xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService1/UserWS.wsdl"/>
+    <system systemId="http://localhost:13797/UserService1/UserWS?xsd=1" uri="src/conf/xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService1/UserWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:13797/UserService1/UserWS?xsd=2" uri="src/conf/xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService1/UserWS.xsd_2.xsd"/>
+    <system systemId="http://localhost:13797/UserService1/UserWS?xsd=3" uri="src/conf/xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService1/UserWS.xsd_3.xsd"/>
 </catalog>

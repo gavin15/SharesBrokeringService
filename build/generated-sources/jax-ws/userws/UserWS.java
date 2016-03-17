@@ -93,9 +93,9 @@ public interface UserWS {
      * @return
      *     returns java.lang.String
      * @throws FileNotFoundException_Exception
-     * @throws ProtocolExceptionException
      * @throws MalformedURLExceptionException
      * @throws IOExceptionException
+     * @throws ProtocolExceptionException
      */
     @WebMethod(operationName = "BuyUserShare")
     @WebResult(targetNamespace = "")
@@ -134,9 +134,9 @@ public interface UserWS {
      * @return
      *     returns java.util.List<org.netbeans.xml.schema.userxmlschema.CompanyType>
      * @throws FileNotFoundException_Exception
-     * @throws ProtocolExceptionException
      * @throws MalformedURLExceptionException
      * @throws IOExceptionException
+     * @throws ProtocolExceptionException
      */
     @WebMethod(operationName = "SellUserShare")
     @WebResult(targetNamespace = "")

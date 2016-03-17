@@ -61,8 +61,8 @@
     </target>
     <target name="wsimport-client-UserWS" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/UserWS"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/UserWS" destdir="${build.generated.dir}/jax-wsCache/UserWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService/UserWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:13797/UserService/UserWS?WSDL" xnocompile="true" xendorsed="true">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService/UserWS.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/UserWS" destdir="${build.generated.dir}/jax-wsCache/UserWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService1/UserWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:13797/UserService1/UserWS?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/UserWS/wsdl/localhost_13797/UserService1/UserWS.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/UserWS"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
